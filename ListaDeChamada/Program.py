@@ -3,25 +3,32 @@ import pandas as pd
 from datetime import datetime
 import io
 import base64
+from pathlib import Path
 
-def set_background_local(image_file):
-    with open(image_file, "rb") as file:
-        encoded = base64.b64encode(file.read()).decode()
-    st.markdown(
-        f"""
-        <style>
-        .stApp {{
-            background-image: url("data:image/jpeg;base64,{encoded}");
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-        }}
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
-set_background_local('ListaDeChamada/img/Estrela.jpg')
+def set_background_local(image_path):
+    img_path = Path(image_path)
+    if img_path.is_file():
+        with img_path.open("rb") as file:
+            encoded = base64.b64encode(file.read()).decode()
+        st.markdown(
+            f"""
+            <style>
+            .stApp {{
+                background-image: url("data:image/jpeg;base64,{encoded}");
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+            }}
+            </style>
+            """,
+            unsafe_allow_html=True
+        )
+    else:
+        st.warning("⚠️ Imagem de fundo não encontrada. Verifique o caminho ou envie o arquivo.")
+
+# Caminho relativo à raiz do projeto
+set_background_local("img/Estrela.jpg")
 
 st.set_page_config(page_title="Controle de Evento", layout="wide")
 st.title("📋 Controle de Entrada e Saída do Evento")
