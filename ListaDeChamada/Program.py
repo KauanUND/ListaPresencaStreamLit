@@ -4,8 +4,14 @@ from datetime import datetime
 import io
 import base64
 from pathlib import Path
+import pytz
 
 import streamlit as st
+
+import pytz
+
+fuso_brasilia = pytz.timezone("America/Sao_Paulo")
+agora = datetime.now(fuso_brasilia).strftime("%H:%M:%S")
 
 def set_background_url(url):
     st.markdown(
@@ -70,11 +76,11 @@ if arquivo:
             col1.write(f"**{row[col_nome]}**")
 
             if col2.button("✅ Entrada", key=f"entrada_{i}"):
-                st.session_state.registro.at[i, 'Entrada'] = datetime.now().strftime("%H:%M:%S")
+                st.session_state.registro.at[i, 'Entrada'] = agora
                 st.session_state.registro.at[i, 'Falta'] = None  # limpa falta se entrar
 
             if col3.button("🚪 Saída", key=f"saida_{i}"):
-                st.session_state.registro.at[i, 'Saída'] = datetime.now().strftime("%H:%M:%S")
+                st.session_state.registro.at[i, 'Saída'] = agora
 
             if col4.button("❌ Falta", key=f"falta_{i}"):
                 st.session_state.registro.at[i, 'Falta'] = "Sim"
