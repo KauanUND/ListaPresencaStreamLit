@@ -21,7 +21,7 @@ def set_background_local(image_file):
         """,
         unsafe_allow_html=True
     )
-set_background_local('img/Estrela.jpg')
+set_background_local('ListaDeChamada/img/Estrela.jpg')
 
 st.set_page_config(page_title="Controle de Evento", layout="wide")
 st.title("📋 Controle de Entrada e Saída do Evento")
